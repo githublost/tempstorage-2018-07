@@ -30,17 +30,17 @@ def calculator(salary):
 
 	# if salary greater than TAX_START_POINT
 	pay_for_tax = salary - 3500
-
 	for item in tax_query_table:
 		if item.pay_for_tax < pay_for_tax:
 			tax = pay_for_tax * item.tax_rate - item.quick_calculate_number
 			return '{:.2f}'.format(tax)
 
 def main():
-	# dispose exceptions
 	try: 
+		# just only one parameter with script self.
 		if len(sys.argv) != 2:
 			raise SyntaxError
+		# convert int datatype.
 		salary = int(sys.argv[1])
 	except Exception as e:
 		print("Parameter Error")
