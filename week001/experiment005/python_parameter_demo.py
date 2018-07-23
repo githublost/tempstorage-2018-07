@@ -61,7 +61,7 @@ print(f(2))
 # we can define variable parameter by custom name.
 # usually, define as '*args'.
 # e.g. connect server multi ports.
-def connect(ipaddress, *ports)
+def connect(ipaddress, *ports):
 	print("IP: ", ipaddress)
 	for port in ports:
 		print("Port: ", port)
@@ -94,6 +94,7 @@ def connect(ipaddress, *ports, **kw):
 		print('{}: {}'.format(key, value))
 # as variable parameter, keyword parameter assign value can use dict,
 # note that, dict key must be string datatype.
+ipaddress = '192.168.1.1'
 params = (25, 26, 27)
 prop = {'device': 'eth0', 'proto': 'static'}
 connect(ipaddress, *params, **prop)
@@ -109,7 +110,7 @@ connect(ipaddress, *params, device='eth0', proto='static')
 # but, ust use par_name to assign value when function called,
 # if not will report error, TypeError.
 # e.g. 
- def hello(*, name):
+def hello(*, name):
  	print("Hello", name)
 # hello('named keyword parameter')
 hello(name='named keyword parameter')
