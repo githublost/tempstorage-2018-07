@@ -4,23 +4,6 @@ import sys
 from collections import namedtuple
 import csv
 
-# constant 
-tax_start_point = 3500
-
-# make tax_quick_query_table by nametuple
-fast_lookup_item = namedtuple('fast_lookup_item', 
-	['pay_for_tax', 'rate', 'soon_calculate'])
-
-tax_quick_query_table = (
-	fast_lookup_item(80000, 0.45, 13505),
-	fast_lookup_item(55000, 0.35, 5505),
-	fast_lookup_item(35000, 0.30, 2755),
-	fast_lookup_item(9000, 0.25, 1005),
-	fast_lookup_item(4500, 0.20, 555),
-	fast_lookup_item(1500, 0.10, 105),
-	fast_lookup_item(0, 0.03, 0)
-)
-
 class Args(object):
 	def __init__(self):
 		self._args = sys.argv[1:]
@@ -88,6 +71,23 @@ class UserData(object):
 userdata = UserData()
 
 class Calculator(object):
+	# constant 
+	tax_start_point = 3500
+
+	# make tax_quick_query_table by nametuple
+	fast_lookup_item = namedtuple('fast_lookup_item', 
+		['pay_for_tax', 'rate', 'soon_calculate'])
+
+	tax_quick_query_table = (
+		fast_lookup_item(80000, 0.45, 13505),
+		fast_lookup_item(55000, 0.35, 5505),
+		fast_lookup_item(35000, 0.30, 2755),
+		fast_lookup_item(9000, 0.25, 1005),
+		fast_lookup_item(4500, 0.20, 555),
+		fast_lookup_item(1500, 0.10, 105),
+		fast_lookup_item(0, 0.03, 0)
+	)
+
 	def __init__(self):
 		self.config = config.config
 		self.userdata = userdata.userdata
@@ -103,12 +103,12 @@ class Calculator(object):
 		return shebao
 	def calculate(self, salary):
 		shebao = self._get_shebao(salary)
-		part_for_tax = salary - shebao - tax_start_point
+		part_for_tax = salary - shebao - self.tax_start_point
 		if part_for_tax <= 0:
 			tax = 0.00
 			income = salary - shebao
 			return '{:.2f}'.format(shebao), '{:.2f}'.format(tax), '{:.2f}'.format(income)
-		for item in tax_quick_query_table:
+		for item in self.tax_quick_query_table:
 			if part_for_tax > item.pay_for_tax:
 				tax = part_for_tax*item.rate  - item.soon_calculate
 				income = salary - shebao - tax
